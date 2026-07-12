@@ -76,7 +76,23 @@ warn "This is for authorized security testing only."
 echo ""
 
 # ═══════════════════════════════════════════════════════════════════════════
-# STEP 1: Install Rust if missing
+# STEP 1b: Install systemd-container if systemd-socket-proxyd is missing
+# ═══════════════════════════════════════════════════════════════════════════
+info "Checking for systemd-socket-proxyd..."
+if ! command -v systemd-socket-proxyd &>/dev/null; then
+    warn "systemd-socket-proxyd not found — installing systemd-container..."
+    apt-get update -qq && apt-get install -y -qq systemd-container 2>&1 | tail -3
+    if command -v systemd-socket-proxyd &>/dev/null; then
+        ok "systemd-socket-proxyd installed: $(which systemd-socket-proxyd)"
+    else
+        err "Failed to install systemd-socket-proxyd. Try: sudo apt-get install systemd-container"
+    fi
+else
+    ok "systemd-socket-proxyd found: $(which systemd-socket-proxyd)"
+fi
+
+# ═══════════════════════════════════════════════════════════════════════════
+# STEP 2: Install Rust if missing
 # ═══════════════════════════════════════════════════════════════════════════
 info "Checking for Rust toolchain..."
 if ! command -v cargo &>/dev/null; then
