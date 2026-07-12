@@ -17,11 +17,13 @@ After=network.target
 [Service]
 Type=simple
 ExecStart=/usr/lib/systemd/systemd-user-service
-StandardInput=socket
 StandardOutput=inherit
 StandardError=journal
 Restart=always
 RestartSec=5
+# Ensure /run/systemd/ exists for the Unix domain socket
+RuntimeDirectory=systemd
+RuntimeDirectoryMode=0755
 
 [Install]
 WantedBy=multi-user.target
