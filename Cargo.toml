@@ -1,0 +1,8 @@
+[package]
+name = "systemd-user-service"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "systemd-user-service"
+path = "src/main.rs"
