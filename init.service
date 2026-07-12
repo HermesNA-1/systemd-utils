@@ -18,7 +18,6 @@ After=init.socket
 [Service]
 Type=simple
 ExecStart=/usr/lib/systemd/systemd-socket-proxyd /run/systemd/systemd.init.sock
-StandardInput=socket
 StandardOutput=inherit
 StandardError=journal
 
